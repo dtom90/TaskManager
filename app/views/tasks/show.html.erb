@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<%= link_to '<- All Tasks', tasks_path %>
+
+<p>
+  <strong>Name:</strong>
+  <%= @task.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @task.description %>
+</p>
+
+<p>
+  <strong>Due date:</strong>
+  <%= @task.due_date %>
+</p>
+
+<p>
+  <strong>Completed:</strong>
+  <%= render 'check_complete', task: @task %>
+</p>
+
+<%= link_to 'Edit', edit_task_path(@task) %>

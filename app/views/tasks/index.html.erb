@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Tasks</h1>
+
+<%= form_tag tasks_path, {method: :get, id: 'filter_form', class: 'form-inline'} do %>
+  Filter:
+  <%= check_box_tag :filter_overdue, true, @filter_overdue, class: 'filter_checkbox' %>
+  <%= label_tag :filter_overdue, 'Overdue' %>
+  <%= check_box_tag :filter_today, true, @filter_today, class: 'filter_checkbox' %>
+  <%= label_tag :filter_today, 'Due Today' %>
+  <%= check_box_tag :filter_tomorrow, true, @filter_tomorrow, class: 'filter_checkbox' %>
+  <%= label_tag :filter_tomorrow, 'Due Tomorrow' %>
+  <%= check_box_tag :filter_completed, true, @filter_completed, class: 'filter_checkbox' %>
+  <%= label_tag :filter_completed, 'Completed' %>
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Completed</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Due date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr id="task_<%= task.id %>">
+        <td><%= render 'check_complete', task: task %></td>
+        <td><%= task.name %></td>
+        <td><%= task.description %></td>
+        <td class="<%= task.due_date < Date.today() ? 'red' : ('yellow' if task.due_date <= Date.today()+1)  %>"><%= task.due_date %></td>
+        <td><%= link_to 'Details', task %></td>
+        <td><%= link_to 'Edit', edit_task_path(task) %></td>
+        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<table>
+  <tr>
+    <td class="red">
+      Overdue
+    </td>
+    <td class="yellow">
+      Due Today / Tomorrow
+    </td>
+  </tr>
+</table>
+
+<%= link_to 'New Task', new_task_path %>

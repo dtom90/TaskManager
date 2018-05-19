@@ -1,0 +1,8 @@
+<%= check_box_tag "task_#{task.id}_completed", task.completed, task.completed,
+                  {data: {
+                      remote: true,
+                      url:    task_path(task, params: {task:{
+                          id: task.id, completed: !task.completed
+                      }}),
+                      method: "PATCH"
+                  }} %>
